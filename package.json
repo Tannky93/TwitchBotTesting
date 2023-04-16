@@ -1,0 +1,16 @@
+{
+  "name": "twitchbot",
+  "version": "0.0.1",
+  "description": "First prototype twitch bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Tannky93",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "tmi.js": "^1.8.5"
+  }
+}
