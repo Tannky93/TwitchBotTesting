@@ -1,0 +1,1 @@
+ Testing command addition functions and saving/loading*,* testing additional command entry*,*
