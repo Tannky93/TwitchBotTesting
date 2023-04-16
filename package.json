@@ -10,7 +10,6 @@
   "author": "Tannky93",
   "license": "ISC",
   "dependencies": {
-    "csv-parser": "^3.0.0",
     "dotenv": "^16.0.3",
     "tmi.js": "^1.8.5"
   }
