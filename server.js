@@ -46,7 +46,8 @@ client.on('message', (channel, tags, message, self) => {
     if(self) return;
     
     const [raw,command,argument] = message.match(regexpCommand)?? "";
-            
+    
+    console.log(tags);
     console.log("Raw: " + raw);
     console.log("Command: "+ command)
     console.log("Arg: "+ argument);
@@ -159,8 +160,6 @@ async function Timer(channel, message) {
     var length = TimerParseTime(message);
     client.say(channel,`The length of the timer is ${length} seconds`);
 
-
-    
 }
 
 function TimerParseTime(message){
