@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const tmi = require('tmi.js');
 const fs = require('fs');
-const csvParser = require('csv-parser');
 
 const regexpCommand = new RegExp(/^!([a-zA-z0-9]+)(?:\w+)?(.*)?/);
 
@@ -66,7 +65,6 @@ client.on('message', (channel, tags, message, self) => {
                 default:
                     client.say(channel,response);
                     break;
-            
             }
             
     }
@@ -146,9 +144,37 @@ function ReadFromFile(){
                 customCommandContent[index] = contentSplit[index];
             }
     
-        })
-        
+        })   
 
-        
+}
 
+async function Timer(channel, message, length) {
+    var length = await TimerParseTime(message);
+
+    
+}
+
+function TimerParseTime(message){
+    var length = 0;
+    // 60 = 60 seconds 2:30 = 2 min 30 seconds, 2:30:59 = 2 hours 30 mins 59 seconds
+    // 4:20:59:59 = 4 days 20 hours 59 mins 59 seconds.
+    // single length = seconds, 2 length = mins + seconds, 
+    // 3 length = hours + mins + seconds, 4 length = days + hours + mins + seconds
+    var parsedmessage = message.split(":");
+    
+    switch(parsedmessage.length){
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        default:
+            length = 1;
+            break;
+    }
+
+    return length;
 }
