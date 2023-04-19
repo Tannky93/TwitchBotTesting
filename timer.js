@@ -1,4 +1,4 @@
-
+const digiExtract = new RegExp(/^\D+/);
 
 
 function TimerParseTime(message){
@@ -46,4 +46,8 @@ function TimerParseTime(message){
     }
 
     return length;
+}
+
+module.exports = {
+    TimerParseTime
 }

@@ -2,11 +2,12 @@ require('dotenv').config();
 
 const tmi = require('tmi.js');
 const fs = require('fs');
-const apaPro = require('pronouncing')
-const timer = require('timer.js');
+const apaPro = require('pronouncing');
+const timer = require('./timer.js');
+const buttsbot = require('./buttsbot.js');
 
 const regexpCommand = new RegExp(/^!([a-zA-z0-9]+)(?:\w+)?(.*)?/);
-const digiExtract = new RegExp(/^\D+/);
+
 
 const commands = {
     website: {
@@ -63,11 +64,6 @@ client.on('message', (channel, tags, message, self) => {
         buttsbotTimeout = false;
     }
 
-    if (buttsbotTimeout === false)
-    {
-        console.log("Message: "+ message);
-        Buttsbot(channel, message);
-    }
 
     const [raw,command,argument] = message.match(regexpCommand)?? "";
     
@@ -112,6 +108,13 @@ client.on('message', (channel, tags, message, self) => {
             if(raw === customCommandTrigger[index]){
                 client.say(channel,customCommandContent[index]);
             }
+        }
+    }else{
+        
+        if (buttsbotTimeout === false){
+            console.log("Message: "+ message);
+            Buttsbot(channel, message);
+        
         }
     }
 
@@ -194,10 +197,9 @@ async function Timer(channel, message) {
 
 }
 
-
 function Buttsbot(channel, messageIn){
     console.log("passed message to Bbot: "+messageIn);
-    let response = stringSplitter(messageIn);
+    let response = buttsbot.stringSplitter(messageIn);
     console.log("Buttified = "+ buttified);
     if(buttified === true){
         client.say(channel, response);
@@ -210,48 +212,10 @@ function Buttsbot(channel, messageIn){
 
 }
 
-function stringSplitter(messagePassed){
-    
-    let butt = "butt";
-    let frequency = 2; // 2,4,6,8,10 5/10 chance for being subsituted.
-    //console.log("Passed to splitter: " + messagePassed)
-    let splitMessage = messagePassed.split(' ');
-    //console.log("Split message first element: " + splitMessage[0]);
-    //console.log("Length before bot processing: "+splitMessage.length);
-
-    for (let index = 0; index < splitMessage.length; index++) {
-
-        let syllable = fastSyllablesCheck(splitMessage[index]);
-
-        console.log("word: " + splitMessage[index] + " Syl: " + syllable);
-
-        if( syllable === 1){
-            let chance = Math.floor(Math.random() * 10);
-            if(chance % frequency === 0){
-                splitMessage[index] = butt;
-                buttified = true;
-            }
-        }
-    }
-
-    //console.log("Length after processing: "+splitMessage.length);
-
-    return response = stringBuilder(splitMessage);
-
-
+function SetButtified(value){
+    buttified = true;
 }
 
-function stringBuilder(messageReceived){
-    let rebuilt ="";
-
-    for (let index = 0; index < messageReceived.length; index++) {
-        //console.log("Length: "+messageReceived.length);
-        rebuilt = rebuilt + messageReceived[index] + " ";
-    }
-
-    return rebuilt;
-}
-
-function fastSyllablesCheck(word){
-    return count = apaPro.syllableCount(apaPro.phonesForWord(word)[0]);
+module.exports = {
+    SetButtified
 }
