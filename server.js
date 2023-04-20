@@ -5,6 +5,7 @@ const fs = require('fs');
 const apaPro = require('pronouncing');
 const timer = require('./timer.js');
 const buttsbot = require('./buttsbot.js');
+const { timeStamp } = require('console');
 
 const regexpCommand = new RegExp(/^!([a-zA-z0-9]+)(?:\w+)?(.*)?/);
 
@@ -42,6 +43,9 @@ var buttsbotTimeout = false;
 var messagesBetweenButtify = 10;
 var lastmessage = 0;
 var buttified = false;
+
+//Datamining demo
+var dataMinerActive = true;
 
 const client = new tmi.Client({
 	options: { debug: true },
@@ -116,6 +120,10 @@ client.on('message', (channel, tags, message, self) => {
             Buttsbot(channel, message);
         
         }
+    }
+
+    if (dataMinerActive === true){
+        MineData(channel,message,tags);
     }
 
     messageCount++;
@@ -199,10 +207,11 @@ async function Timer(channel, message) {
 
 function Buttsbot(channel, messageIn){
     console.log("passed message to Bbot: "+messageIn);
-    let response = buttsbot.stringSplitter(messageIn);
+    let response = buttsbot.stringSplitter(messageIn,buttified);
+    buttified = response[1];
     console.log("Buttified = "+ buttified);
     if(buttified === true){
-        client.say(channel, response);
+        client.say(channel, response[0]);
         lastmessage = messageCount;
         buttified = false;
     }else{
@@ -212,10 +221,11 @@ function Buttsbot(channel, messageIn){
 
 }
 
-function SetButtified(value){
-    buttified = true;
+function MineData(channel,message,tags){
+
+    fs.appendFile("MinedData"+channel+".txt", + " : "+ tags.username+": "+ message + '\n',(err)=>{
+        if(err) throw err;
+        //console.log("data appended" + customCommandTrigger[index]);
+    })
 }
 
-module.exports = {
-    SetButtified
-}

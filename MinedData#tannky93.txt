@@ -1,0 +1,3 @@
+hello
+this is the data mining
+function timeStamp() { [native code] } : tannky93: test data

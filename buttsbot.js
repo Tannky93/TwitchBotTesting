@@ -1,10 +1,7 @@
 const apaPro = require('pronouncing');
-const buttify = require('./server.js');
 
 
-
-function stringSplitter(messagePassed){
-    
+function stringSplitter(messagePassed,buttify){
     let butt = "butt";
     let frequency = 2; // 2,4,6,8,10 5/10 chance for being subsituted.
     //console.log("Passed to splitter: " + messagePassed)
@@ -23,14 +20,16 @@ function stringSplitter(messagePassed){
             if(chance % frequency === 0){
                 console.log("should have been triggered");
                 splitMessage[index] = butt;
-                buttify.SetButtified(true);
+                buttify = true;
             }
         }
     }
 
     //console.log("Length after processing: "+splitMessage.length);
-
-    return response = stringBuilder(splitMessage);
+    response = [];
+    response[0] = stringBuilder(splitMessage);
+    response[1] = buttify;
+    return response;
 
 
 }
