@@ -6,6 +6,7 @@ const apaPro = require('pronouncing');
 const timer = require('./timer.js');
 const buttsbot = require('./buttsbot.js');
 const { timeStamp } = require('console');
+const checkLang = require('./detectlanguage.js');
 
 const regexpCommand = new RegExp(/^!([a-zA-z0-9]+)(?:\w+)?(.*)?/);
 
@@ -40,7 +41,7 @@ var customCount = 0;
 
 // buttsbot variables
 var buttsbotTimeout = false;
-var messagesBetweenButtify = 10;
+var messagesBetweenButtify = 10000;
 var lastmessage = 0;
 var buttified = false;
 
@@ -68,6 +69,7 @@ client.on('message', (channel, tags, message, self) => {
         buttsbotTimeout = false;
     }
 
+    checkLang.PerformTranslatation(message);
 
     const [raw,command,argument] = message.match(regexpCommand)?? "";
     
